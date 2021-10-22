@@ -1,0 +1,26 @@
+ {
+  "path": "/hello",
+  "httpMethod": "GET",
+  "resource": "/hello",
+  "queryStringParameters": {
+      "agentId":"123456",
+      "agentDutyCode":"",
+      "applicationName":"",
+      "transactionId":"",
+      "webappADAuthGroup":""
+
+  },
+  "pathParameters": {
+      "pnr": "G4PQ6K"
+
+  },
+  "headers": {
+      "Content-Type": "application/json"
+  },
+
+
+
+  "body": {
+
+  }
+}

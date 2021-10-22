@@ -1,0 +1,20 @@
+ {
+  "path": "/hello",
+  "httpMethod": "GET",
+  "resource": "/hello",
+  "queryStringParameters": "",
+  "pathParameters": {
+      "pnr": "G4PQ6K"
+  },
+  "headers": {
+      "Content-Type": "application/json",
+      "applicationName": "pnrrestore",
+      "transactionid": "t123456"
+  },
+
+
+
+  "body": {
+
+  }
+}
