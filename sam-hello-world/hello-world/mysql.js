@@ -1,4 +1,7 @@
-var moduleDateTime = require('./module');
+var { currentDateTime } = require('./module');
+var { success, error } = require('./helper/message-helper');
+var { info, warning, fail, ok } = require('./model/result-model');
+
 var dbConfig = require('./config/db-config');
 var mysql = require('mysql');
 var con = mysql.createConnection({
@@ -10,13 +13,15 @@ var con = mysql.createConnection({
     dialect: dbConfig.dialect
 });
 
+var AWS = require("aws-sdk");
+
 let response;
 
 exports.lambdaHandler = async (event, context) => {
     try {
         console.log('Start: mysql - lambdaHandler');
 
-        var content = ('Current Date Time: ' + moduleDateTime.currentDateTime());
+        var description = ('Current Date Time: ' + currentDateTime);
 
         con.connect();
         var sql = "select * from students";
@@ -28,8 +33,9 @@ exports.lambdaHandler = async (event, context) => {
             const response = {
                 statusCode: 200,
                 body: JSON.stringify({
+                    success: true,
                     message: 'local mysql!',
-                    content: content,
+                    description: description,
                     data: data,
                 }),
             };
@@ -43,7 +49,15 @@ exports.lambdaHandler = async (event, context) => {
 
     } catch (err) {
         console.log(err);
-        return err;
+        var resultModel = fail(error);
+        response = {
+            statusCode: 500,
+            body: JSON.stringify({
+                success: false,
+                message: error,
+                description: resultModel
+            }),
+        };
     }
 
     return response
