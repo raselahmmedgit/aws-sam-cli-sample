@@ -1,0 +1,60 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: >
+  Detect IROP Trips
+  SAM Template for Detect IROP Trips
+# More info about Globals: https://github.com/awslabs/serverless-application-model/blob/master/docs/globals.rst
+
+Globals:
+  Function:
+    Runtime: nodejs14.x
+    MemorySize: 128
+    Timeout: 3
+
+Resources:
+  IropManagementApiHandler:
+    Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
+    Properties:
+      CodeUri: src/iropmanagement/
+      Handler: iropManagementApiHandler.lambdaHandler
+      Role: arn:aws:iam::496499860592:role/delegate-admin-hello-lambda-role
+      Runtime: nodejs14.x
+      #Policies :
+      Events:
+        HttpGet:
+          Type: Api # More info about API Event Source: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#api
+          Properties:
+            Path: /v1/rebooking/pnr/iropSegments/{pnr}
+            Method: get
+  DetectIropApiHandler:
+    Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
+    Properties:
+      CodeUri: src/detectirop/
+      Handler: detectIropApiHandler.lambdaHandler
+      Role: arn:aws:iam::496499860592:role/delegate-admin-hello-lambda-role
+      Runtime: nodejs14.x
+      #Policies :
+      Events:
+        HttpGet:
+          Type: Api # More info about API Event Source: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#api
+          Properties:
+            Path: /v1/rebooking/pnr/detectIrop/{pnr}
+            Method: get
+  PnrManagementApiHandler:
+    Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
+    Properties:
+      CodeUri: src/pnrmanagement/
+      Handler: pnrManagementApiHandler.lambdaHandler
+      Role: arn:aws:iam::496499860592:role/delegate-admin-hello-lambda-role
+      Runtime: nodejs14.x
+      #Policies :
+      Events:
+        HttpGet:
+          Type: Api # More info about API Event Source: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#api
+          Properties:
+            Path: /v1/rebooking/pnr/pnrSegments/{pnr}
+            Method: get
+
+ 
+
+ 
